@@ -1,0 +1,7 @@
+{
+  "_comment": "Copy this file to ecologits-mapping.json and map your upstream model ids to EcoLogits provider/model_name pairs. Valid providers: openai, anthropic, mistralai, google_genai, cohere, huggingface_hub.",
+
+  "my-small-model": { "provider": "openai", "model_name": "gpt-4o-mini" },
+  "my-large-model": { "provider": "anthropic", "model_name": "claude-opus-5-5" },
+  "my-gemini-model": { "provider": "google_genai", "model_name": "gemini-pro-latest" }
+}

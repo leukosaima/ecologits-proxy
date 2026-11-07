@@ -1,0 +1,53 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+.uv/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Packaging / build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+
+# IDE / editor folders
+.idea/
+.vscode/
+
+# Local environment / secrets
+.env
+.env.local
+.env.*.local
+config.local.ps1
+config.local.sh
+
+# Local model mapping (use ecologits-mapping.example.json as a template)
+ecologits-mapping.json
+
+# Logs and runtime output
+*.log
+*.err
+proxy.log
+proxy.err
+mock-upstream.log
+mock-upstream.err
+
+# EcoLogits runtime data (if redirected into the project)
+ecologits.jsonl
+ecologits-last.json
+ecologits-toast-debug.jsonl
+
+# Test / scratch files
+*.bak
+
+# OS junk
+.DS_Store
+Thumbs.db
