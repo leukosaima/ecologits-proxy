@@ -185,8 +185,23 @@ the plugin shows a toast like:
 session ≈ 0.9–1.1 mm · lifetime ≈ 5.2–7.1 mm
 ```
 
-The session total resets each time a new top-level OpenCode session is created;
-the lifetime total keeps accumulating while the plugin is loaded.
+The session total is tracked per OpenCode session; the lifetime total keeps
+accumulating across sessions. Both are persisted to:
+
+```
+~/.local/share/opencode/ecologits-sessions.json
+```
+
+by default. You can change the path by setting `ECOLOGITS_SESSIONS_PATH`. The
+plugin loads a `.env` file from its own directory
+(`~/.config/opencode/plugins/ecologits-toast/.env`), so you can put the path
+there without exporting env vars to OpenCode's launch environment:
+
+```dotenv
+ECOLOGITS_SESSIONS_PATH=C:/path/to/ecologits-proxy/ecologits-sessions.json
+```
+
+The plugin reads the file on load, so totals survive an OpenCode restart.
 
 ## Troubleshooting
 
@@ -223,3 +238,4 @@ next to the gateway:
 | `mock_upstream.py` | Local mock upstream for testing |
 | `test-proxy.ps1` / `test-proxy.sh` | End-to-end test against the mock upstream |
 | `plugins/ecologits-toast/tui.js` | TUI plugin that toasts on `session.execution.succeeded` |
+| `docs/multi-client-architecture.md` | Design notes for expanding beyond OpenCode |

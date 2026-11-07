@@ -28,6 +28,7 @@ dist/
 .env.*.local
 config.local.ps1
 config.local.sh
+plugins/ecologits-toast/.env
 
 # Local model mapping (use ecologits-mapping.example.json as a template)
 ecologits-mapping.json
@@ -43,6 +44,7 @@ mock-upstream.err
 # EcoLogits runtime data (if redirected into the project)
 ecologits.jsonl
 ecologits-last.json
+ecologits-sessions.json
 ecologits-toast-debug.jsonl
 
 # Test / scratch files
