@@ -144,18 +144,28 @@ Add a custom provider in `~/.config/opencode/opencode.jsonc` (V2 format):
 }
 ```
 
-The toast plugin is TUI-only, so also add it to `~/.config/opencode/cli.json`:
+The toast plugin is TUI-only. Copy it from this repo into your OpenCode config:
+
+**Windows:**
+
+```powershell
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.config\opencode\plugins\ecologits-toast"
+Copy-Item "plugins\ecologits-toast\tui.js" "$env:USERPROFILE\.config\opencode\plugins\ecologits-toast\tui.js"
+```
+
+**macOS / Linux:**
+
+```bash
+mkdir -p ~/.config/opencode/plugins/ecologits-toast
+cp plugins/ecologits-toast/tui.js ~/.config/opencode/plugins/ecologits-toast/tui.js
+```
+
+Then add it to `~/.config/opencode/cli.json`:
 
 ```json
 {
   "plugins": ["./plugins/ecologits-toast"]
 }
-```
-
-The plugin itself lives at:
-
-```
-~/.config/opencode/plugins/ecologits-toast/tui.js
 ```
 
 ### Use it
@@ -171,8 +181,12 @@ the plugin shows a toast like:
 
 ```
 177–221 µg CO₂ · 0.38–0.48 mWh
-≈ driving a car 0.9 mm–1.1 mm (session total ≈ 1.0 mm)
+≈ driving a car 0.9–1.1 mm
+session ≈ 0.9–1.1 mm · lifetime ≈ 5.2–7.1 mm
 ```
+
+The session total resets each time a new top-level OpenCode session is created;
+the lifetime total keeps accumulating while the plugin is loaded.
 
 ## Troubleshooting
 
@@ -208,4 +222,4 @@ next to the gateway:
 | `requirements.txt` | Python dependencies |
 | `mock_upstream.py` | Local mock upstream for testing |
 | `test-proxy.ps1` / `test-proxy.sh` | End-to-end test against the mock upstream |
-| `~/.config/opencode/plugins/ecologits-toast/tui.js` | TUI plugin that toasts on `session.execution.succeeded` |
+| `plugins/ecologits-toast/tui.js` | TUI plugin that toasts on `session.execution.succeeded` |
