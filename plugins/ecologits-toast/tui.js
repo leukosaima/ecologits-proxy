@@ -17,6 +17,11 @@ const STORE_VERSION = 1;
 const PLUGIN_DIR = path.dirname(fileURLToPath(import.meta.url));
 const PLUGIN_ENV_PATH = path.join(PLUGIN_DIR, ".env");
 
+const DEBUG_EVENTS_PATH = process.env.ECOLOGITS_DEBUG_EVENTS_PATH
+  ? path.resolve(process.env.ECOLOGITS_DEBUG_EVENTS_PATH)
+  : path.join(os.homedir(), ".local", "share", "opencode", "ecologits-toast-debug.jsonl");
+const DEBUG_EVENTS = process.env.ECOLOGITS_DEBUG_EVENTS === "1" || process.env.ECOLOGITS_DEBUG_EVENTS === "true";
+
 function loadEnvFile(envPath) {
   try {
     if (!fs.existsSync(envPath)) return;
@@ -173,6 +178,23 @@ function addImpact(target, gwp, energy) {
   target.energy.max += energy.max;
 }
 
+function debugEvent(details) {
+  if (!DEBUG_EVENTS) return;
+  try {
+    const data = details?.data ?? {};
+    const entry = {
+      receivedAt: new Date().toISOString(),
+      type: details?.type,
+      sessionID: data.sessionID,
+      parentID: data.parentID,
+      requestID: data.requestID,
+    };
+    fs.appendFileSync(DEBUG_EVENTS_PATH, JSON.stringify(entry) + "\n", "utf-8");
+  } catch (err) {
+    console.error("[ecologits-toast] failed to write debug event:", err);
+  }
+}
+
 export default Plugin.define({
   id: "ecologits-toast",
   setup(context) {
@@ -224,6 +246,7 @@ export default Plugin.define({
       try {
         const details = event?.details ?? event;
         const data = details?.data ?? {};
+        debugEvent(details);
 
         if (details?.type === "session.created") {
           if (!data.parentID && data.sessionID) {
